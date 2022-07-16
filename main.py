@@ -1,9 +1,9 @@
 import discord
 import asyncio
 import config
-#--------- NEW LINE
 from discord.ext import commands
-import requests
+#--------- NEW LINE
+import os
 #---------
 
 intents = discord.Intents.default()
@@ -35,22 +35,17 @@ async def on_message(message):
     await message.channel.send("whats up!")
 
 
-#-------ADD
-@bot.command()
-async def facts(ctx, number):
-    response = requests.get(f'http://numbersapi.com/{number}')
-    await ctx.channel.send(response.text)
+#### delete all this, move to cog
 
-#finishes running this before starting the bot
-#fill this with any other work you need to do in the background
-#notice this prints before "Online"
-#like loading cogs
-async def setup():
-    print('setting up bot..')
+async def load():
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            await bot.load_extension(f'cogs.{filename[:-3]}')
+
 
 async def main():
-    await setup()
     #await client.start(config.TOKEN)
+    await load()
     await bot.start(config.TOKEN)
 
 asyncio.run(main())
