@@ -10,10 +10,19 @@ class Survey(commands.Cog):
     async def on_ready(self):
         print('Survey cog loaded.')
 
-    @app_commands.command(name="survey", description="survey form")
+    @commands.command()
+    async def sync(self, ctx, spec) -> None:
+        spec = str(spec)
+        fmt = await ctx.bot.tree.sync(guild=ctx.guild)
+
+        await ctx.send(
+          f"Synced {len(fmt)} commands to the current guild."
+        )
+        return
+
+    @app_commands.command(name="fillsurvey", description="survey form")
     async def fillsurvey(self, interaction: discord.Interaction, name: str, age: int):
         await interaction.response.send_message(f"Name {name} Age {age}")
-
 
 async def setup(bot):
 

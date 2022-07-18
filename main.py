@@ -12,7 +12,6 @@ intents.message_content = True
 #client = discord.Client(intents=intents)
 bot = commands.Bot(command_prefix='.', intents=intents, application_id='997506029833162782')
 
-
 #event
 #when bot is loaded and ready this will call
 
@@ -21,7 +20,6 @@ bot = commands.Bot(command_prefix='.', intents=intents, application_id='99750602
 @bot.event
 async def on_ready():
     print('Online.')
-
 
 #@client.event
 @bot.event
@@ -41,8 +39,6 @@ async def load():
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
             await bot.load_extension(f'cogs.{filename[:-3]}')
-            if filename == 'survey.py':
-                await bot.tree.sync(guild = discord.Object(id=997204563612401684))
 
 
 async def main():
