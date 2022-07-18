@@ -6,11 +6,11 @@ from discord.ext import commands
 import os
 #---------
 
-intents = discord.Intents.default()
+intents = discord.Intents.all()
 intents.message_content = True
 #----change this line
 #client = discord.Client(intents=intents)
-bot = commands.Bot(command_prefix='.', intents=intents)
+bot = commands.Bot(command_prefix='.', intents=intents, application_id='997506029833162782')
 
 
 #event
@@ -41,6 +41,8 @@ async def load():
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
             await bot.load_extension(f'cogs.{filename[:-3]}')
+            if filename == 'survey.py':
+                await bot.tree.sync(guild = discord.Object(id=997204563612401684))
 
 
 async def main():
