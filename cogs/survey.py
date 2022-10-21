@@ -20,6 +20,15 @@ class Survey(commands.Cog):
         )
         return
 
+    @commands.command()
+    async def unsync(self, ctx) -> None:
+        ctx.bot.tree.clear_commands(guild=ctx.guild)
+        fmt = await ctx.bot.tree.sync(guild=ctx.guild)
+        await ctx.send(
+          f"Unsynced {len(fmt)} commands to the current guild."
+        )
+        return
+
     @app_commands.command(name="fillsurvey", description="survey form")
     async def fillsurvey(self, interaction: discord.Interaction, name: str, age: int):
         await interaction.response.send_modal(SurveyModal())
